@@ -5,7 +5,7 @@ March 2015 HSA runtime release. Currently, only API Trace/Timestamp mode is
 supported in the HSA Profiler.  Future releases will add Performance Counter
 collection for HSA applications.
 
-Information contained here is sepcific to sprofile version 3.1.3966
+Information contained here is sepcific to sprofile version 3.1.3988
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There is a new command-line switch used to tell sprofile to
