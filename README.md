@@ -1,4 +1,4 @@
-# HSA Profiler May 2015 Beta release
+# HSA Profiler May 2015 Beta Release
 
 This beta release of the HSA Profiler is compatible with the May 2015 HSA
 runtime release. This is a near-feature complete version of the profiler with
@@ -13,6 +13,7 @@ profile an HSA application:  `--hsatrace` and `--hsapmc`
 ### Collecting an Application Trace
 
 To collect an application trace with kernel timestamps:
+
    `./sprofile --hsatrace AppToProfile`
 
 Executing sprofile with the `--hsatrace` switch will launch the specified
@@ -43,8 +44,8 @@ Here is a brief description of the .atp file sections for the HSA profiler:
 
 Most other sprofile switches will also work with the `--hsatrace` switch:
 
-* You can control the name and location of the .atp file using sprofile's --outputfile switch.
-* You can generate a subset of the Trace Summary pages using sprofile's --tracesummary and --atpfile switch.  For instance: `./sprofile --tracesummary --atpfile myapp.atp` will generate an API summary, a kernel summary and a top-ten kernel dispatch list from the data contained in the myapp.atp file. It will also produce a "Best Practices" summary file by applying a rules-based analysis of the .atp file.  Currently two rules are supported:
+* You can control the name and location of the .atp file using sprofile's `--outputfile` switch.
+* You can generate a subset of the Trace Summary pages using sprofile's `--tracesummary` and `--atpfile` switch.  For instance: `./sprofile --tracesummary --atpfile myapp.atp` will generate an API summary, a kernel summary and a top-ten kernel dispatch list from the data contained in the myapp.atp file. It will also produce a "Best Practices" summary file by applying a rules-based analysis of the .atp file.  Currently two rules are supported:
  * An error will be reported if any HSA API returns an error code
  * A resource leak will be reported for mismatched create/destroy calls (i.e. if the application calls hsa_queue_create without a corresponding hsa_queue_destroy call)
  * Similarly, you can generate a summary while collecting a trace using the following command line: `./sprofile --hsatrace --tracesummary ApptoProfile`
@@ -87,6 +88,7 @@ Profiler.
 ## Collecting GPU Performance Counters
 
 To collect GPU performance counters:
+
    `./sprofile --hsapmc AppToProfile`
 
 Executing sprofile with the `--hsapmc` switch will launch the specified
