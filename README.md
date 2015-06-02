@@ -105,7 +105,7 @@ Profiler.
 To collect GPU performance counters:
    ./sprofile --hsapmc AppToProfile
 
-Executing sprofile with whe --hsapmc switch will launch the specified
+Executing sprofile with the --hsapmc switch will launch the specified
 "AppToProfile" and allow the profiler to collect GPU Performance Counter
 data for each kernel dispatched by the application. The output file will
 contain the following information for each kernel dispatched:
