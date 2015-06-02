@@ -4,7 +4,7 @@ This beta release of the HSA Profiler is compatible with the May 2015 HSA
 runtime release. This is a near-feature complete version of the profiler with
 the HSA Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
 
-Information contained here is sepcific to sprofile version 3.1.4195
+Information contained here is specific to sprofile version 3.1.4195
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There are two new command-line switches used to tell sprofile to
@@ -23,7 +23,7 @@ information:
 * Host-side CPU timestamps for all HSA APIs called by the application
 * Device-side GPU timestamps for all HSA kernels dispatched by the application
 
-The results from the profiler will be wriiten to an .atp file that is very
+The results from the profiler will be written to an .atp file that is very
 similar to the .atp file written by CodeXL's OpenCL profiler.  When profiling
 an HSA application, the .atp file will have four main sections, the first three
 of which are similar to the sections written by the OpenCL profiler. The CodeXL
