@@ -4,6 +4,8 @@ This beta release of the HSA Profiler is compatible with the May 2015 HSA
 runtime release. This is a near-feature complete version of the profiler with
 the HSA Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
 
+This build of the profiler is supported on Kaveri only.
+
 Information contained here is specific to sprofile version 3.1.4195
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
