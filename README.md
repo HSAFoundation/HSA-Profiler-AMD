@@ -1,5 +1,6 @@
 # HSA Profiler May 2015 Beta Release
 
+## Overview
 This beta release of the HSA Profiler is compatible with the May 2015 HSA
 runtime release. This is a near-feature complete version of the profiler with
 the HSA Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
@@ -12,7 +13,17 @@ The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There are two new command-line switches used to tell sprofile to
 profile an HSA application:  `--hsatrace` and `--hsapmc`
 
-### Collecting an Application Trace
+##Table of Contents
+* [Collecting an Application Trace] (#ApplicationTrace)
+* [Collecting GPU Performance Counters] (#PerfCounters)
+* [System Setup] (#SystemSetup)
+* [Sample Usage] (#SampleUsage)
+* [Known Issues] (#KnownIssues)
+* [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
+
+
+<A NAME="ApplicationTrace">
+## Collecting an Application Trace
 
 To collect an application trace with kernel timestamps:
 
@@ -87,6 +98,7 @@ Even though CodeXL 1.7 can load HSA .atp files, there will be some UI issues.
 It is expected that a future version of CodeXL will fully support the HSA
 Profiler.
 
+<A NAME="PerfCounters">
 ## Collecting GPU Performance Counters
 
 To collect GPU performance counters:
@@ -138,6 +150,7 @@ specify a different set of counters for each profile run.  Because of this
 restriction, the `--singlepass` and `--nogputime` switches are always enabled
 when profiling an HSA application.
 
+<A NAME="SystemSetup">
 ## System Setup 
 
 This assumes you are starting from a system where you can run HSA applications
@@ -157,6 +170,7 @@ LD_LIBRARY_PATH environment variable contains the following two directories:
       that if you receive an update to one of them, you will need to also get
       an update to the other.
 
+<A NAME="SampleUsage">
 ## Sample Usage
 
 You can profile the vector_copy sample contained in HSA-Runtime-AMD/sample
@@ -166,6 +180,7 @@ using the following steps:
  * Execute `./sprofile --hsatrace vector_copy`
  * Execute `./sprofile --hsapmc vector_copy`
 
+<A NAME="KnownIssues">
 ## Known Issues
 * The resource tracker analysis module may report a false positive resource leak.
 * Kernel occupancy information will only be written to disk if the application being profiled calls hsa_shut_down
