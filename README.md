@@ -1,13 +1,22 @@
-# HSA Profiler May 2015 Beta Release
+# HSA Profiler September 2015 Release
 
 ## Overview
-This beta release of the HSA Profiler is compatible with the May 2015 HSA
-runtime release. This is a near-feature complete version of the profiler with
-the HSA Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
+This release of the HSA Profiler is compatible with the May 2015 HSA runtime
+release. This is a feature-complete version of the profiler with the HSA
+Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
 
-This build of the profiler is supported on Kaveri only.
+This build of the profiler is supported on Kaveri and Carrizo (perf counter
+collection is not supported on Carrizo).
 
-Information contained here is specific to sprofile version 3.1.4195
+Information contained here is specific to sprofile version 3.1.9654
+
+This build is identical to the the profiler build contained in CodeXL 1.8,
+which can be downloaded from the following location:
+
+    http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/.
+
+To use the CodeXL GUI to profile HSA applications and to analyze the results,
+please download and use CodeXL 1.8.
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There are two new command-line switches used to tell sprofile to
@@ -20,7 +29,6 @@ profile an HSA application:  `--hsatrace` and `--hsapmc`
 * [Sample Usage] (#SampleUsage)
 * [Known Issues] (#KnownIssues)
 * [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
-
 
 <A NAME="ApplicationTrace">
 ## Collecting an Application Trace
@@ -88,15 +96,11 @@ APIs for controlling the collection of profiling data from within a profiled
 application. Documentation on the AMDTActivityLogger API can be found in the
 distribution.
 
-You can load an HSA .atp file into CodeXL 1.7 in order to see the application
-timeline.  You can download the latest version of CodeXL 1.7 from the following
+You can load an HSA .atp file into CodeXL 1.8 in order to see the application
+timeline.  You can download the latest version of CodeXL 1.8 from the following
 location:
 
     http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/
-
-Even though CodeXL 1.7 can load HSA .atp files, there will be some UI issues.
-It is expected that a future version of CodeXL will fully support the HSA
-Profiler.
 
 <A NAME="PerfCounters">
 ## Collecting GPU Performance Counters
@@ -182,5 +186,5 @@ using the following steps:
 
 <A NAME="KnownIssues">
 ## Known Issues
-* The resource tracker analysis module may report a false positive resource leak.
 * Kernel occupancy information will only be written to disk if the application being profiled calls hsa_shut_down
+* Attempting to collect performance counters on a Carrizo HSA machine will likely lead to an application hang or crash.

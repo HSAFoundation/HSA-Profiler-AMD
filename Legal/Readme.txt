@@ -3,7 +3,7 @@
 //                 CodeXL                 //
 ////////////////////////////////////////////
 
-This version supports Windows 7 64-bit, Windows 8 64-bit and Linux x86_64 architectures. 
+This version supports Windows 7 64-bit, Windows 8.1 64-bit,  Windows 10 64-bit and Linux x86_64 architectures. 
 
 Download
 ========
@@ -99,7 +99,7 @@ glew:
 	THE POSSIBILITY OF SUCH DAMAGE.
     
 OpenCL:
-    Copyright (c) 2008-2014 The Khronos Group Inc.
+    Copyright (c) 2008-2015 The Khronos Group Inc.
 
 Sincerely,
 
