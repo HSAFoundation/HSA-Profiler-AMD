@@ -1,22 +1,15 @@
 # HSA Profiler September 2015 Release
 
 ## Overview
-This release of the HSA Profiler is compatible with the May 2015 HSA runtime
-release. This is a feature-complete version of the profiler with the HSA
-Profiling feature set nearly on par with the CodeXL OpenCL Profiler.
+This release of the HSA Profiler is compatible with the September 2015 HSA
+runtime release (release 1.0.3). This is a feature-complete version of the
+profiler with the HSA Profiling feature set nearly on par with the CodeXL
+OpenCL Profiler.
 
 This build of the profiler is supported on Kaveri and Carrizo (perf counter
 collection is not supported on Carrizo).
 
-Information contained here is specific to sprofile version 3.1.9654
-
-This build is identical to the the profiler build contained in CodeXL 1.8,
-which can be downloaded from the following location:
-
-    http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/.
-
-To use the CodeXL GUI to profile HSA applications and to analyze the results,
-please download and use CodeXL 1.8.
+Information contained here is specific to sprofile version 3.1.9780
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There are two new command-line switches used to tell sprofile to
@@ -27,6 +20,7 @@ profile an HSA application:  `--hsatrace` and `--hsapmc`
 * [Collecting GPU Performance Counters] (#PerfCounters)
 * [System Setup] (#SystemSetup)
 * [Sample Usage] (#SampleUsage)
+* [Using with CodeXL 1.8] (#CodeXL1.8)
 * [Known Issues] (#KnownIssues)
 * [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
 
@@ -159,20 +153,18 @@ when profiling an HSA application.
 
 This assumes you are starting from a system where you can run HSA applications
 outside of the profiler. The information here provides only additional steps
-you need to perform to be able to profile HSA applications.
+you need to perform to be able to profile HSA applications.  Please refer to
+https://github.com/HSAFoundation/HSA-Runtime-AMD for runtime and driver
+installation information.
 
-In order to profile, you will need to make sure that both the HSA runtime
-libraries (libhsa-runtime64.so, libhsa-runtime-ext64.so, and libhsakmt.so) and
-the HSA runtime tools library (libhsa-runtime-tools64.so) can be found and
-loaded by the application you are profiling.  It is recommended that the
-LD_LIBRARY_PATH environment variable contains the following two directories:
-* The location of libhsa-runtime-tools64.so.1 (i.e. HSA-Profiler-AMD/lib)
-* The location of libhsa-runtime64.so.1 (i.e. HSA-Runtime-AMD/lib)
-
-**Note**: the runtime tools library (libhsa-runtime-tools64.so.1) is tightly
-      coupled to the runtime library (libhsa-runtime64.so.1).  It is expected
-      that if you receive an update to one of them, you will need to also get
-      an update to the other.
+In order to profile, you will need to make sure that the HSA runtime
+libraries (libhsa-runtime64.so, libhsa-runtime-ext64.so,
+libhsa-runtime-tools64.so, and libhsakmt.so) can be found and loaded by the
+application you are profiling. Starting with the 1.0.3 runtime release,
+libhsa-runtime-tools64.so is now included as part of the runtime. Thus, it is
+no longer distributed with the profiler. It is recommended that the
+LD_LIBRARY_PATH environment variable contains the following directory:
+* The location of libhsa-runtime64.so.1 and libhsa-runtime-tools64.so.1 (i.e. HSA-Runtime-AMD/lib)
 
 <A NAME="SampleUsage">
 ## Sample Usage
@@ -184,7 +176,23 @@ using the following steps:
  * Execute `./sprofile --hsatrace vector_copy`
  * Execute `./sprofile --hsapmc vector_copy`
 
+<A NAME="CodeXL1.8">
+## Using this build with CodeXL1.8
+
+This build is compatible with CodeXL 1.8, which can be downloaded from the
+following location:
+
+    http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/.
+
+To use the CodeXL GUI to profile HSA applications and to analyze the results,
+please replace the following CodeXL files with the same-named files included here:
+
+$(CODEXL-DIR)/x86_64/sprofile
+$(CODEXL-DIR)/x86_64/libHSAProfileAgent.so
+$(CODEXL-DIR)/x86_64/libHSATraceAgent.so
+$(CODEXL-DIR)/x86_64/libGPUPerfAPIHSA.so
+
 <A NAME="KnownIssues">
 ## Known Issues
 * Kernel occupancy information will only be written to disk if the application being profiled calls hsa_shut_down
-* Attempting to collect performance counters on a Carrizo HSA machine will likely lead to an application hang or crash.
+* Collecting performance counters on a Carrizo HSA machine is disabled in this build.
