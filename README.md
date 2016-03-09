@@ -28,7 +28,7 @@ CodeXLGpuProfiler to profile an HSA application:  `--hsatrace` and `--hsapmc`
 * [Collecting GPU Performance Counters] (#PerfCounters)
 * [System Setup] (#SystemSetup)
 * [Sample Usage] (#SampleUsage)
-* [Using with CodeXL 1.8] (#CodeXL1.8)
+* [Using with CodeXL 1.9] (#CodeXL1.9)
 * [Known Issues] (#KnownIssues)
 * [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
 
@@ -109,8 +109,8 @@ APIs for controlling the collection of profiling data from within a profiled
 application. Documentation on the AMDTActivityLogger API can be found in the
 distribution.
 
-You can load an HSA .atp file into CodeXL 1.8 in order to see the application
-timeline.  You can download the latest version of CodeXL 1.8 from the following
+You can load an HSA .atp file into CodeXL 1.9 in order to see the application
+timeline.  You can download the latest version of CodeXL 1.9 from the following
 location:
 
     http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/
@@ -196,7 +196,7 @@ using the following steps:
  * Execute `./CodeXLGpuProfiler --hsatrace vector_copy`
  * Execute `./CodeXLGpuProfiler --hsapmc vector_copy`
 
-<A NAME="CodeXL1.8">
+<A NAME="CodeXL1.9">
 ## Using this build with CodeXL1.9
 
 This build is compatible with CodeXL 1.9, which can be downloaded from the
