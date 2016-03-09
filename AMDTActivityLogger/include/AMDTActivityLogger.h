@@ -27,6 +27,8 @@ extern "C" {
 #define AL_OUT_OF_MEMORY                      -7
 #define AL_FAILED_TO_OPEN_OUTPUT_FILE         -8
 #define AL_FAILED_TO_ATTACH_TO_PROFILER       -9
+#define AL_WARN_PROFILE_ALREADY_RESUMED       -10
+#define AL_WARN_PROFILE_ALREADY_PAUSED        -11
 
 #if defined(_WIN32) || defined(__CYGWIN__)
 #define AL_API_CALL __stdcall
@@ -84,21 +86,6 @@ extern int AL_API_CALL amdtEndMarker();
 /// \return status code
 extern int AL_API_CALL amdtFinalizeActivityLogger();
 
-/// Instruct profiler to stop tracing APIs. Tracing can be resumed using amdtResumeTrace.
-/// Deprecated -- use amdtStopProfiling instead
-/// \return status code
-extern AL_DEPRECATED_PREFIX int AL_API_CALL amdtStopTrace() AL_DEPRECATED_SUFFIX;
-
-/// Instruct profiler to resume tracing APIs. Tracing can be stopped using amdtStopTrace.
-/// By default the CodeXL Application Timeline Trace Profiler starts tracing an application
-/// from the first API call.  For example, when tracing an OpenCL application, tracing will
-/// start when the application makes the first OpenCL API. To tell the profiler to disable
-/// tracing at the start of the application you can start sprofile with the --startdisabled
-/// flag.
-/// Deprecated -- use amdtResumeProfiling instead
-/// \return status code
-extern int AL_DEPRECATED_PREFIX AL_API_CALL amdtResumeTrace() AL_DEPRECATED_SUFFIX;
-
 /// Enum to define the profiling modes that can be stopped or resumed
 typedef enum
 {
@@ -108,22 +95,33 @@ typedef enum
     /// Performance Counter Profiling
     AMDT_PERF_COUNTER_PROFILING = 0x2,
 
+    /// CPU Profiling
+    AMDT_CPU_PROFILING = 0x4,
+
     /// All profiling modes
-    AMDT_ALL_PROFILING = AMDT_TRACE_PROFILING | AMDT_PERF_COUNTER_PROFILING
+    AMDT_ALL_PROFILING = AMDT_TRACE_PROFILING | AMDT_PERF_COUNTER_PROFILING | AMDT_CPU_PROFILING
 } amdtProfilingControlMode;
 
 /// Instruct profiler to stop profiling. Profiling can be resumed using amdtResumeProfiling.
 /// \param profilingControlMode the profiling mode (or modes) to stop
 /// \return status code
-extern int AL_API_CALL amdtStopProfiling(amdtProfilingControlMode profilingControlMode = AMDT_ALL_PROFILING);
+extern int AL_API_CALL amdtStopProfiling(amdtProfilingControlMode profilingControlMode);
 
 /// Instruct profiler to resume profiling. Profiling can be stopped using amdtStopProfiling.
 /// By default the CodeXL GPU Profiler starts profiling an application from the first API call (or
 /// first kernel dispatch in the case of performance counter profiling). To tell the profiler to
-/// disable profiling at the start of the application you can start sprofile with the --startdisabled flag.
+/// disable profiling at the start of the application you can start CodeXLGpuProfiler with the --startdisabled flag.
 /// \param profilingControlMode the profiling mode (or modes) to resume
 /// \return status code
-extern int AL_API_CALL amdtResumeProfiling(amdtProfilingControlMode profilingControlMode = AMDT_ALL_PROFILING);
+extern int AL_API_CALL amdtResumeProfiling(amdtProfilingControlMode profilingControlMode);
+
+/// Instruct profiler to stop profiling. Profiling can be resumed using amdtResumeProfilingEx.
+/// \return status code
+extern int AL_API_CALL amdtStopProfilingEx(void);
+
+/// Instruct profiler to resume profiling. Profiling can be stopped using amdtStopProfilingEx.
+/// \return status code
+extern int AL_API_CALL amdtResumeProfilingEx(void);
 
 #ifdef __cplusplus
 }
@@ -132,7 +130,7 @@ extern int AL_API_CALL amdtResumeProfiling(amdtProfilingControlMode profilingCon
 #ifdef __cplusplus
 
 /// A utility class that opens a marker in the constructor and closes it in the destructor
-/// This saves the user the need to explicitly call amdtEndMarker and also handles user code 
+/// This saves the user the need to explicitly call amdtEndMarker and also handles user code
 /// with exceptions and multiple exit points correctly.
 class amdtScopedMarker
 {

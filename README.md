@@ -1,21 +1,29 @@
-# HSA Profiler September 2015 Release
+# HSA Profiler March 2016 Release
 
 ## Overview
-This release of the HSA Profiler is compatible with the September 2015 HSA
-runtime release (release 1.0.3). This is a feature-complete version of the
-profiler with the HSA Profiling feature set nearly on par with the CodeXL
-OpenCL Profiler.
+This "dev" release of the HSA Profiler is compatible with the ROCK/ROCR
+releases that appear in the "dev" branches of the following repositories:
 
-This build of the profiler is supported on Kaveri and Carrizo (perf counter
-collection is not supported on Carrizo).
+https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver/tree/dev
+https://github.com/RadeonOpenCompute/ROCR-Runtime/tree/dev
 
-Information contained here is specific to sprofile version 3.1.9780
+Note: At this time, the builds of ROCK/ROCR in the "master" branches of
+the above repositories are not compatible with profiling.  When the "master"
+branches are updated to supoprt profiling, then the "master" branch of this
+repository will also be udpated. Also, because things in the "dev" branch of
+the above repositories are changing, it is possible that a change may be
+introduced which causes problems for the profiler.
+
+This build of the profiler is supported on Kaveri, Carrizo, and Fiji (Boltzmann)
+
+Information contained here is specific to CodeXLGpuProfiler version 4.0.10891
 
 The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
-"sprofile").  There are two new command-line switches used to tell sprofile to
-profile an HSA application:  `--hsatrace` and `--hsapmc`
+"CodeXLGpuProfiler").  There are two new command-line switches used to tell
+CodeXLGpuProfiler to profile an HSA application:  `--hsatrace` and `--hsapmc`
 
 ##Table of Contents
+* [What's New] (WhatsNew)
 * [Collecting an Application Trace] (#ApplicationTrace)
 * [Collecting GPU Performance Counters] (#PerfCounters)
 * [System Setup] (#SystemSetup)
@@ -24,14 +32,25 @@ profile an HSA application:  `--hsatrace` and `--hsapmc`
 * [Known Issues] (#KnownIssues)
 * [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
 
+<A NAME="WhatsNew">
+## What's New
+
+* Profiler executable has been renamed from "sprofile" to "CodeXLGpuProfiler"
+* Support for Boltzmann (Fiji)
+* Supoprt for collecting Performance Counters on Carrizo
+* Support for HCC applications
+* Support for HIP applications
+* Improved API Tracing Output
+* Many bug fixes to improve stability and functionality
+
 <A NAME="ApplicationTrace">
 ## Collecting an Application Trace
 
 To collect an application trace with kernel timestamps:
 
-   `./sprofile --hsatrace AppToProfile`
+   `./CodeXLGpuProfiler --hsatrace AppToProfile`
 
-Executing sprofile with the `--hsatrace` switch will launch the specified
+Executing CodeXLGpuProfiler with the `--hsatrace` switch will launch the specified
 "AppToProfile" and allow the profiler to trace all HSA APIs called by the
 application. In addition, the profiler will also gather 2 sets of timestamp
 information:
@@ -57,13 +76,13 @@ Here is a brief description of the .atp file sections for the HSA profiler:
  * the duration of the kernel (in nanoseconds).
  * the agent handle of the agent the kernel was dispatched to.
 
-Most other sprofile switches will also work with the `--hsatrace` switch:
+Most other CodeXLGpuProfiler switches will also work with the `--hsatrace` switch:
 
-* You can control the name and location of the .atp file using sprofile's `--outputfile` switch.
-* You can generate a subset of the Trace Summary pages using sprofile's `--tracesummary` and `--atpfile` switch.  For instance: `./sprofile --tracesummary --atpfile myapp.atp` will generate an API summary, a kernel summary and a top-ten kernel dispatch list from the data contained in the myapp.atp file. It will also produce a "Best Practices" summary file by applying a rules-based analysis of the .atp file.  Currently two rules are supported:
+* You can control the name and location of the .atp file using CodeXLGpuProfiler's `--outputfile` switch.
+* You can generate a subset of the Trace Summary pages using CodeXLGpuProfiler's `--tracesummary` and `--atpfile` switch.  For instance: `./CodeXLGpuProfiler --tracesummary --atpfile myapp.atp` will generate an API summary, a kernel summary and a top-ten kernel dispatch list from the data contained in the myapp.atp file. It will also produce a "Best Practices" summary file by applying a rules-based analysis of the .atp file.  Currently two rules are supported:
  * An error will be reported if any HSA API returns an error code
  * A resource leak will be reported for mismatched create/destroy calls (i.e. if the application calls hsa_queue_create without a corresponding hsa_queue_destroy call)
- * Similarly, you can generate a summary while collecting a trace using the following command line: `./sprofile --hsatrace --tracesummary ApptoProfile`
+ * Similarly, you can generate a summary while collecting a trace using the following command line: `./CodeXLGpuProfiler --hsatrace --tracesummary ApptoProfile`
 * The following switches should also work:
  * `--envvar`
  * `--envvarfile`
@@ -80,7 +99,7 @@ Most other sprofile switches will also work with the `--hsatrace` switch:
 
 You can get more information on the switches mentioned above by reading the CodeXL User Guide or by executing:
 
-  `./sprofile --hsatrace --help`
+  `./CodeXLGpuProfiler --hsatrace --help`
   
 A version of the AMDTActivityLogger instrumentation library which is supported
 by the HSA profiler is also included in this distribution. Using this API, you
@@ -101,9 +120,9 @@ location:
 
 To collect GPU performance counters:
 
-   `./sprofile --hsapmc AppToProfile`
+   `./CodeXLGpuProfiler --hsapmc AppToProfile`
 
-Executing sprofile with the `--hsapmc` switch will launch the specified
+Executing CodeXLGpuProfiler with the `--hsapmc` switch will launch the specified
 "AppToProfile" and allow the profiler to collect GPU Performance Counter
 data for each kernel dispatched by the application. The output file will
 contain the following information for each kernel dispatched:
@@ -118,9 +137,9 @@ contain the following information for each kernel dispatched:
 * The values of any performance counters collected for the kernel
   
 
-Most other sprofile switches will also work with the `--hsapmc` switch:
+Most other CodeXLGpuProfiler switches will also work with the `--hsapmc` switch:
 
-* You can control the name and location of the .csv file using sprofile's `--outputfile` switch.
+* You can control the name and location of the .csv file using CodeXLGpuProfiler's `--outputfile` switch.
 * You can specify the performance counters to collect using the `--counterlist` switch.
 * A kernel occupancy file can be generated while collecting performance counters by specifying the `--occupancy` switch.
 * The following switches should also work:
@@ -154,7 +173,8 @@ when profiling an HSA application.
 This assumes you are starting from a system where you can run HSA applications
 outside of the profiler. The information here provides only additional steps
 you need to perform to be able to profile HSA applications.  Please refer to
-https://github.com/HSAFoundation/HSA-Runtime-AMD for runtime and driver
+https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver and
+https://github.com/RadeonOpenCompute/ROCR-Runtime for runtime and driver
 installation information.
 
 In order to profile, you will need to make sure that the HSA runtime
@@ -164,35 +184,36 @@ application you are profiling. Starting with the 1.0.3 runtime release,
 libhsa-runtime-tools64.so is now included as part of the runtime. Thus, it is
 no longer distributed with the profiler. It is recommended that the
 LD_LIBRARY_PATH environment variable contains the following directory:
-* The location of libhsa-runtime64.so.1 and libhsa-runtime-tools64.so.1 (i.e. HSA-Runtime-AMD/lib)
+* The location of libhsa-runtime64.so.1 and libhsa-runtime-tools64.so.1, typically /opt/hsa/lib
 
 <A NAME="SampleUsage">
 ## Sample Usage
 
-You can profile the vector_copy sample contained in HSA-Runtime-AMD/sample
+You can profile the vector_copy sample contained in ROCR-Runtime/sample
 using the following steps:
  * Build the vector_copy sample using make
- * Verify that the sample executable runs
- * Execute `./sprofile --hsatrace vector_copy`
- * Execute `./sprofile --hsapmc vector_copy`
+ * Verify that the sample executable runs (note that at this time, the sample only supports the Base profiler and thus only runs on a Boltzmann/Fiji system)
+ * Execute `./CodeXLGpuProfiler --hsatrace vector_copy`
+ * Execute `./CodeXLGpuProfiler --hsapmc vector_copy`
 
 <A NAME="CodeXL1.8">
-## Using this build with CodeXL1.8
+## Using this build with CodeXL1.9
 
-This build is compatible with CodeXL 1.8, which can be downloaded from the
+This build is compatible with CodeXL 1.9, which can be downloaded from the
 following location:
 
     http://developer.amd.com/tools-and-sdks/opencl-zone/codexl/.
 
 To use the CodeXL GUI to profile HSA applications and to analyze the results,
-please replace the following CodeXL files with the same-named files included here:
+please copy the following files from this repository into $(CODEXL-DIR)/x86_64/:
 
-$(CODEXL-DIR)/x86_64/sprofile
-$(CODEXL-DIR)/x86_64/libHSAProfileAgent.so
-$(CODEXL-DIR)/x86_64/libHSATraceAgent.so
-$(CODEXL-DIR)/x86_64/libGPUPerfAPIHSA.so
+bin/CodeXLGpuProfiler (CodeXL 1.9 still expects sprofile, so you'll need to rename CodeXLGpuProfiler to sprofile in the CodeXL directory)
+bin/libAMDTGpuProfilerHSAProfileAgent.so
+bin/libAMDTGpuProfilerHSATraceAgent.so
+bin/libGPUPerfAPIHSA.so
 
 <A NAME="KnownIssues">
 ## Known Issues
+* API Trace and Perf Counter data may be truncated if the application being profiled does not call hsa_shut_down
 * Kernel occupancy information will only be written to disk if the application being profiled calls hsa_shut_down
-* Collecting performance counters on a Carrizo HSA machine is disabled in this build.
+
