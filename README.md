@@ -5,6 +5,7 @@ This "dev" release of the HSA Profiler is compatible with the ROCK/ROCR
 releases that appear in the "dev" branches of the following repositories:
 
 https://github.com/RadeonOpenCompute/ROCK-Kernel-Driver/tree/dev
+
 https://github.com/RadeonOpenCompute/ROCR-Runtime/tree/dev
 
 Note: At this time, the builds of ROCK/ROCR in the "master" branches of
