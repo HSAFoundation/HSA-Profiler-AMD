@@ -1,6 +1,9 @@
-# HSA Profiler September 2015 Release
+##This Profiler has been superceded by ROCm-Profiler for ROCm Platform AMD's HSA enabled GPU computing platform https://github.com/RadeonOpenCompute/ROCm-Profiler
 
-## Overview
+
+### HSA Profiler September 2015 Release
+
+#### Overview
 This release of the HSA Profiler is compatible with the September 2015 HSA
 runtime release (release 1.0.3). This is a feature-complete version of the
 profiler with the HSA Profiling feature set nearly on par with the CodeXL
@@ -15,7 +18,7 @@ The HSA Profiler is integrated into the CodeXL GPU Profiler Backend (aka
 "sprofile").  There are two new command-line switches used to tell sprofile to
 profile an HSA application:  `--hsatrace` and `--hsapmc`
 
-##Table of Contents
+####Table of Contents
 * [Collecting an Application Trace] (#ApplicationTrace)
 * [Collecting GPU Performance Counters] (#PerfCounters)
 * [System Setup] (#SystemSetup)
@@ -25,7 +28,7 @@ profile an HSA application:  `--hsatrace` and `--hsapmc`
 * [License] (Legal/CodeXLEndUserLicenseAgreement-Linux.htm)
 
 <A NAME="ApplicationTrace">
-## Collecting an Application Trace
+#### Collecting an Application Trace
 
 To collect an application trace with kernel timestamps:
 
